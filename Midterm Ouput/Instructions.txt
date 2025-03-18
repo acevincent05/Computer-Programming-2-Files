@@ -1,0 +1,30 @@
+Instructions
+PART I: CSV FILE
+
+
+
+Create a record management system that will add records to CSV file. Moreover, it can display all records and search and display individual records from the CSV file.
+Your program must display a menu that will let the user to select options: Add new record, Display all records, and Search record. Optionally you can include Delete record functionality for higher grade.
+Your program must be divided into functions. Optionally, you may implement object-oriented programming (OOP) for a higher grade.
+
+
+PART II: DATA ANALYSIS AND VISUALIZATION
+
+
+
+1. Download a dataset (in CSV or Excel format) that interests you for data analysis and visualization. You can find datasets on platforms like Kaggle.com or other open datasets.
+
+2. Apply data analysis techniques using pandas to a dataset. Address a minimum of five (5) data analytics questions. Utilize selection of columns and rows, sorting, and grouping.
+
+3. Apply data visualization techniques using hvplot to the same dataset. Address a minimum of five (5) data analytics questions. Create at least three different types of hvplot charts.
+
+
+
+SUBMISSION INSTRUCTION:
+
+
+
+- Submit the documentation of your output for Part 1 in PDF file contacting description, complete codes, and screenshots of output. Submit also the Python file.
+
+- Submit the Jupyter Notebook file for your Part 2 output containing the Questions and equivalent data analysis code. Submit also the dataset that you used.
+
