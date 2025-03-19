@@ -1,6 +1,7 @@
 import csv
 from csv import DictWriter
 
+#Implementation of OOP with encapsulation
 class Student_Info():
     def __init__(self, student_info: str, field_names: list):
         self.student_info = student_info
@@ -22,14 +23,17 @@ class Student_Info():
     def set_field_names(self, field):
         self.field_names = field
 
+    #Shows the contents of the CSV file
     def view(self):
         with open(self.student_info, mode='r', newline='') as csvfile:
             reader = csv.DictReader(csvfile, fieldnames = field_names)
-                
+
             next(reader, None)
+
             if any(reader):
                 print()
-                print('='*53)    
+                print('='*53)
+                print(f"{'Name':<15} {'Program':<15} {'Department':<15} {'Year':<5}")
                 for row in reader:
                     print(f"{row['Name']:<15} {row['Program']:<15} {row['Department']:<15} {row['Year']:<5}")
                 print('='*53)    
@@ -37,6 +41,7 @@ class Student_Info():
             else:
                 print('The file has not content.')
 
+    #Allows the user to add contents in the CSV file
     def add(self, name: str, program: str, dept: str, year: str):
 
         new_data = {'Name': name, 'Program': program, 'Department': dept, 'Year': year}
@@ -46,6 +51,7 @@ class Student_Info():
             dictwriter_object.writerow(new_data)
             print("File has been updated")
 
+    #Allows the user to search the info of a student by typing its name
     def search(self, search_name: str):
         print()
         with open(self.set_student_info, newline="") as csvfile:
@@ -65,20 +71,23 @@ class Student_Info():
             if not exist:
                 print("Student not found.")
 
+    #Allows the user to delete a student info 
     def delete(self, username):
         updatedlist=[]
         with open("student_info.csv",newline="") as csvfile:
             reader=csv.reader(csvfile)
             
-            for row in reader: 
-                if row[0]!=username: 
-                    updatedlist.append(row) 
+            for row in reader: #for every row in the file
+                if row[0]!=username: #as long as the username is not in the row .......
+                    updatedlist.append(row) #add each row, line by line, into a list called 'udpatedlist'
 
+        #Updates the content of the CSV file
         with open("student_info.csv","w",newline="") as csvfile:
             Writer=csv.writer(csvfile)
             Writer.writerows(updatedlist)
             print("File has been updated")
 
+#For Display the Menu Options
 def menu():
     strs = ('1. View\n'
             '2. Add\n'
@@ -98,18 +107,21 @@ print("STUDENTS' BASIC INFO - MSEUF LUCENA")
 print('='*35)
 print()
 
+#The header of the CSV file
 field_names = ['Name', 'Program', 'Department', 'Year']
 
-try:
+#Handling the file error 
+try: #Checks if the CSV is already created 
     with open('student_info.csv', 'r', newline='') as csvfile:
         pass
-except:
+except: #Creates a new CSV file if not yet created
     with open('student_info.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=field_names)
         writer.writeheader()
 
 student_info_manager = Student_Info('student_info.csv', field_names)
 
+#User menu navigation
 while True:
     choice = menu()
 
