@@ -1,80 +1,79 @@
 import csv
 from csv import DictWriter
 
-data = [
-    {'Name': 'Nicole', 'Program': 'BSCS', 'Department': 'CCMS', 'Year': '1'},
-    {'Name': 'Jade', 'Program': 'BSCE', 'Department': 'CEng', 'Year': '2'},
-    {'Name': 'Chesca', 'Program': 'BS Psych ', 'Department': 'CAS', 'Year': '1'},
-    {'Name': 'Jake', 'Program': 'BSBA ', 'Department': 'CBA', 'Year': '3'},
-]
+class Student_Info():
+    def __init__(self, student_info: str, field_names: list):
+        self.student_info = student_info
+        self.field_names = field_names
 
-field_names = ['Name', 'Program', 'Department', 'Year']
-
-with open('student_info.csv', 'w', newline='') as csvfile:
-    writer = csv.DictWriter(csvfile, fieldnames=field_names)
-    writer.writeheader()
-    writer.writerows(data)
-
-def delete():
-    updatedlist=[]
-    with open("student_info.csv",newline="") as csvfile:
-      reader=csv.reader(csvfile)
-      username=input("Enter the username of the user you wish to remove from file:")
-      
-      for row in reader:
-        if row[0]!=username: 
-            updatedlist.append(row) 
-      updatefile(updatedlist)
-        
-def updatefile(updatedlist):
-    with open("student_info.csv","w",newline="") as csvfile:
-        Writer=csv.writer(csvfile)
-        Writer.writerows(updatedlist)
-        print("File has been updated")
-
-def add():
-    name = input('Enter Name: ')
-    program = input('Enter Program: ')
-    dept = input('Enter Department ')
-    year = input('Enter Year: ')
-
-    new_data = {'Name': name, 'Program': program, 'Department': dept, 'Year': year}
+    @property
+    def get_student_info(self):
+        return self.student_info
     
-    with open("student_info.csv","a",newline="") as csvfile:
-        dictwriter_object = DictWriter(csvfile, fieldnames=field_names)
-        dictwriter_object.writerow(new_data)
-        print("File has been updated")
-         
-def search():
-    search_name = input('Search name: ')
-    print()
-    with open("student_info.csv",newline="") as csvfile:
-        reader = csv.DictReader(csvfile, fieldnames = field_names)
+    @get_student_info.setter
+    def set_student_info(self, info):
+        self.student_info = info
 
-        exist = False
-        print()
-        print('='*53) 
-        print(f"{'Name':<15} {'Program':<15} {'Department':<15} {'Year':<5}")
-        for row in reader: 
-            if row['Name']==search_name: 
+    @property
+    def get_field_names(self):
+        return self.field_names
+    
+    @get_field_names.setter
+    def set_field_names(self, field):
+        self.field_names = field
+
+    def view(self):
+        with open(self.student_info, mode='r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile, fieldnames = field_names)
+
+            print()
+            print('='*53)    
+            for row in reader:
                 print(f"{row['Name']:<15} {row['Program']:<15} {row['Department']:<15} {row['Year']:<5}")
-                exist = True
-        print('='*53) 
-        print()
+            print('='*53)    
+            print()
 
-    if not exist:
-        print("Student not found.")
+    def add(self, name: str, program: str, dept: str, year: str):
 
-def view():
-    with open('student_info.csv', mode='r', newline='') as csvfile:
-        reader = csv.DictReader(csvfile, fieldnames = field_names)
+        new_data = {'Name': name, 'Program': program, 'Department': dept, 'Year': year}
+        
+        with open(self.student_info,"a",newline="") as csvfile:
+            dictwriter_object = DictWriter(csvfile, fieldnames=field_names)
+            dictwriter_object.writerow(new_data)
+            print("File has been updated")
 
+    def search(self, search_name: str):
         print()
-        print('='*53)    
-        for row in reader:
-            print(f"{row['Name']:<15} {row['Program']:<15} {row['Department']:<15} {row['Year']:<5}")
-        print('='*53)    
-        print()
+        with open(self.set_student_info, newline="") as csvfile:
+            reader = csv.DictReader(csvfile, fieldnames = field_names)
+
+            exist = False
+            print()
+            print('='*53) 
+            print(f"{'Name':<15} {'Program':<15} {'Department':<15} {'Year':<5}")
+            for row in reader: 
+                if row['Name']==search_name: 
+                    print(f"{row['Name']:<15} {row['Program']:<15} {row['Department']:<15} {row['Year']:<5}")
+                    exist = True
+            print('='*53) 
+            print()
+
+            if not exist:
+                print("Student not found.")
+
+    def delete(self, username):
+        updatedlist=[]
+        with open("student_info.csv",newline="") as csvfile:
+            reader=csv.reader(csvfile)
+            
+            for row in reader:
+                if row[0]!=username:
+                    updatedlist.append(row)
+
+        with open("student_info.csv","w",newline="") as csvfile:
+            Writer=csv.writer(csvfile)
+            Writer.writerows(updatedlist)
+            print("File has been updated")
 
 def menu():
     strs = ('1. View\n'
@@ -95,22 +94,36 @@ print("STUDENTS' BASIC INFO - MSEUF LUCENA")
 print('='*35)
 print()
 
+field_names = ['Name', 'Program', 'Department', 'Year']
+
+student_info_manager = Student_Info('student_info.csv', field_names)
+
 while True:
     choice = menu()
 
     if choice == 1:
-        view()
+        student_info_manager.view()
+        
     elif choice == 2: 
-        add()
+        name = input('Enter Name: ')
+        program = input('Enter Program: ')
+        dept = input('Enter Department ')
+        year = input('Enter Year: ')
+
+        student_info_manager.add(name, program, dept, year)
+        
     elif choice == 3:
-        search()
+        search_name = input('Search name: ')
+
+        student_info_manager.search(search_name)
+
     elif choice == 4:
-        delete()
+        username=input("Enter the username of the user you wish to remove from file:")
+
+        student_info_manager.delete(username)
+
     elif choice == 5:
         print("Exiting...")
         break
     else:
         print("Invalid choice, try again.")
-
-
-
