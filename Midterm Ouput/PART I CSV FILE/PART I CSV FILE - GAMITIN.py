@@ -52,32 +52,33 @@ class Student_Info():
             dictwriter_object.writerow(new_data) #adds the new data from user input
             print("File has been updated")
 
+    #Verifies the user's input if it exists in the CSV file
     def verify_search(self, verify_name):
         with open(self.set_student_info, newline="") as csvfile:
             reader = csv.DictReader(csvfile, fieldnames=field_names)
 
-            for row in reader:  # Iterate through all rows
-                if row['Name'] == verify_name:  # If a match is found
+            for row in reader:  #checks all rows
+                if row['Name'] == verify_name:  #if the name is found
                     return {
                         'Name': row['Name'], 
                         'Program': row['Program'], 
-                        'Department': row['Department'],  # Ensure consistent header usage
+                        'Department': row['Department'], 
                         'Year': row['Year']
-                    }
+                    } #brings back the verified dictionary
 
-            # If no match is found after iterating through all rows
+            # If the student doesn't exist
             return False
 
     #Allows the user to search the info of a student by typing the name
     def search(self, search_name: str):
 
-        verified = self.verify_search(search_name)
+        verified = self.verify_search(search_name) #Implemented Method Composition to verify the existence of the inputted name and info in the CSV file
         
-        if verified:  # If a match is found
+        if verified:  #if the input exists
             print()
             print('=' * 53) 
-            print(f"{'Name':<15} {'Program':<15} {'Department':<15} {'Year':<5}")
-            print(f"{verified['Name']:<15} {verified['Program']:<15} {verified['Department']:<15} {verified['Year']:<5}")
+            print(f"{'Name':<15} {'Program':<15} {'Department':<15} {'Year':<5}") # displays the header 
+            print(f"{verified['Name']:<15} {verified['Program']:<15} {verified['Department']:<15} {verified['Year']:<5}") #displays the searched student info
             print('=' * 53) 
             print()
         else:
@@ -85,16 +86,16 @@ class Student_Info():
 
     #Allows the user to delete a student info 
     def delete(self, username):
-        verified = self.verify_search(username)
+        verified = self.verify_search(username) #Implemented Method Composition to delete of the inputted name and info in the CSV file
 
-        if verified:
+        if verified: #if the input exists
             with open(self.student_info, "r", newline="") as csvfile:
                 reader = csv.DictReader(csvfile, fieldnames=field_names)
                 
-                # Filter out the matching dictionary
+                # puts all items except for the user's input in another list 
                 updatedlist = [item for item in reader if item != verified]
 
-            # Write the updated list back to the file
+            # writes the updated list back to the file
             with open(self.student_info, "w", newline="") as csvfile:
                 dictwriter_object = DictWriter(csvfile, fieldnames=field_names)
                 dictwriter_object.writerows(updatedlist)  
@@ -153,12 +154,12 @@ while True:
         student_info_manager.add(name, program, dept, year) #calls the add method and gives the user input
         
     elif choice == 3:
-        search_name = input('Search name: ')
+        search_name = input('Search Student name: ')
 
         student_info_manager.search(search_name) #calls the search method and gives the name to be search
 
     elif choice == 4:
-        username=input("Enter the username of the user you wish to remove from file: ")
+        username=input("Enter the name you wish to delete: ")
 
         student_info_manager.delete(username) #calls the delete method and gives the name of the student that will be deleted
 
