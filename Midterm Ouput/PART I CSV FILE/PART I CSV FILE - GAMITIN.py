@@ -62,13 +62,14 @@ class Student_Info():
                 print("Student not found.")
 
     def delete(self, username):
+    #1. This code snippet asks the user for a username and deletes the user's record from file.
         updatedlist=[]
         with open("student_info.csv",newline="") as csvfile:
             reader=csv.reader(csvfile)
             
-            for row in reader:
-                if row[0]!=username:
-                    updatedlist.append(row)
+            for row in reader: #for every row in the file
+                if row[0]!=username: #as long as the username is not in the row .......
+                    updatedlist.append(row) #add each row, line by line, into a list called 'udpatedlist'
 
         with open("student_info.csv","w",newline="") as csvfile:
             Writer=csv.writer(csvfile)
@@ -96,6 +97,14 @@ print()
 
 field_names = ['Name', 'Program', 'Department', 'Year']
 
+try:
+    with open('student_info.csv', 'r', newline='') as csvfile:
+        pass
+except:
+    with open('student_info.csv', 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=field_names)
+        writer.writeheader()
+
 student_info_manager = Student_Info('student_info.csv', field_names)
 
 while True:
@@ -107,7 +116,7 @@ while True:
     elif choice == 2: 
         name = input('Enter Name: ')
         program = input('Enter Program: ')
-        dept = input('Enter Department ')
+        dept = input('Enter Department: ')
         year = input('Enter Year: ')
 
         student_info_manager.add(name, program, dept, year)
@@ -118,7 +127,7 @@ while True:
         student_info_manager.search(search_name)
 
     elif choice == 4:
-        username=input("Enter the username of the user you wish to remove from file:")
+        username=input("Enter the username of the user you wish to remove from file: ")
 
         student_info_manager.delete(username)
 
@@ -127,3 +136,6 @@ while True:
         break
     else:
         print("Invalid choice, try again.")
+
+
+
