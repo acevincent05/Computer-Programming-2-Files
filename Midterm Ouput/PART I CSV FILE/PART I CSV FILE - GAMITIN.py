@@ -70,7 +70,7 @@ class Student_Info():
 
     #Allows the user to search the info of a student by typing the name
     def search(self, search_name: str):
-        print()
+
         verified = self.verify_search(search_name)
         
         if verified:  # If a match is found
@@ -81,25 +81,26 @@ class Student_Info():
             print('=' * 53) 
             print()
         else:
-            print('Not found')
-    
+            print('Student not found.')
+
     #Allows the user to delete a student info 
     def delete(self, username):
-        updatedlist=[]
-        with open("student_info.csv", newline="") as csvfile:
-            reader = csv.DictReader(csvfile, fieldnames = field_names)
+        verified = self.verify_search(username)
 
-            for row in reader: #reads every row 
-                if row['Name']!=username: #as long as the username is not in the row 
-                    updatedlist.append(row) #add each row, line by line, into the 'udpatedlist'
-
-        #Updates the content of the CSV file
-        with open("student_info.csv","w", newline="") as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=reader.fieldnames)
+        if verified:
+            with open(self.student_info, "r", newline="") as csvfile:
+                reader = csv.DictReader(csvfile, fieldnames=field_names)
                 
-            for row in updatedlist:
-                writer.writerow(row)
-            print("File has been updated")
+                # Filter out the matching dictionary
+                updatedlist = [item for item in reader if item != verified]
+
+            # Write the updated list back to the file
+            with open(self.student_info, "w", newline="") as csvfile:
+                dictwriter_object = DictWriter(csvfile, fieldnames=field_names)
+                dictwriter_object.writerows(updatedlist)  
+            print("Student record deleted successfully.")
+        else:
+            print("Student not found.")
 
 #For Display the Menu Options
 def menu():
