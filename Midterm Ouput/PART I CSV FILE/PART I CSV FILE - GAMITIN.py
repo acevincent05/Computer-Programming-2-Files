@@ -52,27 +52,37 @@ class Student_Info():
             dictwriter_object.writerow(new_data) #adds the new data from user input
             print("File has been updated")
 
+    def verify_search(self, verify_name):
+        with open(self.set_student_info, newline="") as csvfile:
+            reader = csv.DictReader(csvfile, fieldnames=field_names)
+
+            for row in reader:  # Iterate through all rows
+                if row['Name'] == verify_name:  # If a match is found
+                    return {
+                        'Name': row['Name'], 
+                        'Program': row['Program'], 
+                        'Department': row['Department'],  # Ensure consistent header usage
+                        'Year': row['Year']
+                    }
+
+            # If no match is found after iterating through all rows
+            return False
+
     #Allows the user to search the info of a student by typing the name
     def search(self, search_name: str):
         print()
-        with open(self.set_student_info, newline="") as csvfile:
-            reader = csv.DictReader(csvfile, fieldnames = field_names)
-
+        verified = self.verify_search(search_name)
+        
+        if verified:  # If a match is found
             print()
-            print('='*53) 
+            print('=' * 53) 
             print(f"{'Name':<15} {'Program':<15} {'Department':<15} {'Year':<5}")
-            for row in reader: #reads every row
-                if row['Name']==search_name: #if the row has the name under the 'Name' dictionary
-                    print(f"{row['Name']:<15} {row['Program']:<15} {row['Department']:<15} {row['Year']:<5}")
-                    exist = True 
-                else:
-                    exist = False
-            print('='*53) 
+            print(f"{verified['Name']:<15} {verified['Program']:<15} {verified['Department']:<15} {verified['Year']:<5}")
+            print('=' * 53) 
             print()
-
-            if not exist:
-                print("Student not found.")
-
+        else:
+            print('Not found')
+    
     #Allows the user to delete a student info 
     def delete(self, username):
         updatedlist=[]
