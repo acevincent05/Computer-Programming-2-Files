@@ -25,13 +25,17 @@ class Student_Info():
     def view(self):
         with open(self.student_info, mode='r', newline='') as csvfile:
             reader = csv.DictReader(csvfile, fieldnames = field_names)
-
-            print()
-            print('='*53)    
-            for row in reader:
-                print(f"{row['Name']:<15} {row['Program']:<15} {row['Department']:<15} {row['Year']:<5}")
-            print('='*53)    
-            print()
+                
+            next(reader, None)
+            if any(reader):
+                print()
+                print('='*53)    
+                for row in reader:
+                    print(f"{row['Name']:<15} {row['Program']:<15} {row['Department']:<15} {row['Year']:<5}")
+                print('='*53)    
+                print()
+            else:
+                print('The file has not content.')
 
     def add(self, name: str, program: str, dept: str, year: str):
 
@@ -62,14 +66,13 @@ class Student_Info():
                 print("Student not found.")
 
     def delete(self, username):
-    #1. This code snippet asks the user for a username and deletes the user's record from file.
         updatedlist=[]
         with open("student_info.csv",newline="") as csvfile:
             reader=csv.reader(csvfile)
             
-            for row in reader: #for every row in the file
-                if row[0]!=username: #as long as the username is not in the row .......
-                    updatedlist.append(row) #add each row, line by line, into a list called 'udpatedlist'
+            for row in reader: 
+                if row[0]!=username: 
+                    updatedlist.append(row) 
 
         with open("student_info.csv","w",newline="") as csvfile:
             Writer=csv.writer(csvfile)
@@ -136,6 +139,3 @@ while True:
         break
     else:
         print("Invalid choice, try again.")
-
-
-
