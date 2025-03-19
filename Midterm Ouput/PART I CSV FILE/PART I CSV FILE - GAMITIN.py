@@ -1,7 +1,7 @@
 import csv
 from csv import DictWriter #Read and writes data of the CSV using dictionaries
 
-#Implementation of OOP with encapsulation
+#Implementation of OOP with Encapsulation and Composition
 class Student_Info():
     def __init__(self, student_info: str, field_names: list): #CSV file name and headers 
         self.student_info = student_info
