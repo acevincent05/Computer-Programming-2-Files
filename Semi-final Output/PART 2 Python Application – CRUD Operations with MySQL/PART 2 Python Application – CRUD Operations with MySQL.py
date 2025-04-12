@@ -156,7 +156,15 @@ def get_student_info():
     program = input('Enter program: ')
     return student_ID, name, age, shs_strand, program
 
-SQL_Pre_Enrollees_DB = Pre_Enrollees_DB('root', 'CS2025EU', 'localhost', 'Pre_Enrollees')
+def DB_credentials():
+    user = input('Enter user: ')
+    password = input('Enter password: ')
+    host = input('Enter host: ')
+    db_select = input('Enter Database: ')
+
+    #SQL_Pre_Enrollees_DB = Pre_Enrollees_DB('root', 'CS2025EU', 'localhost', 'Pre_Enrollees')
+    global SQL_Pre_Enrollees_DB
+    SQL_Pre_Enrollees_DB = Pre_Enrollees_DB(user, password, host, db_select)
 
 def main():
     while True:
@@ -199,4 +207,5 @@ def main():
             print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
+    DB_credentials()
     main()
