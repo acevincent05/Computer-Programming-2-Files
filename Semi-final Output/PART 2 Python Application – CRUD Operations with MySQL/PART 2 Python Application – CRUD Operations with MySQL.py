@@ -68,8 +68,10 @@ class Pre_Enrollees_DB:
 
             connected.commit()
             print('Data Saved.')
+
         except mysql.connector.Error as err:
             print(f'Error: {err}')
+
         finally:
             if connected.is_connected():
                 cursor.close()
@@ -81,15 +83,16 @@ SQL_Pre_Enrollees_DB = Pre_Enrollees_DB('root', 'CS2025EU', 'localhost', 'Pre_En
 def main():
     while True:
         print("\n=== EARLY ENROLLMENT REGISTRATION ===")
-        print("1. Add Student")
-        print("2. Option Two")
-        print("3. Option Three")
-        print("0. Exit")
+        print("1. View Enrollee Records")
+        print("2. Add Enrollee Records")
+        print("3. Update Enrollee Records")
+        print("0. Delete Enrollee Records")
 
         choice = input("Enter your choice: ")
 
         if choice == '1':
             os.system('cls')
+
             student_ID = input('Enter ID: ')
             name = input('Enter name:')
             age = input('Enter age: ')
