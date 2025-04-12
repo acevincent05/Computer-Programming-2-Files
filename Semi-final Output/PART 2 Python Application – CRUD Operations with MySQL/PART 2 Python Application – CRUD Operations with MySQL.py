@@ -9,7 +9,6 @@ class Pre_Enrollees_DB:
         self.password = password
         self.host = host
         self.database = database
-        #self.cursor = self.conn.cursor()
 
     @property
     def get_user(self):
@@ -59,14 +58,56 @@ class Pre_Enrollees_DB:
             else:
                 print(err)
 
-    def testlang(self):
-        connected = self.connect()
+    def add(self, student_ID, name, age, shs_strand, program):
+        try:
+            connected = self.connect()
+            cursor = connected.cursor()
 
-        if connected:
-            print('okay nagana git test')
-        else:
-            print('aguy git test')
+            query = "INSERT INTO new_students (ID, name, age, shs_strand, chosen_program) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(query, (student_ID, name, int(age), shs_strand, program))
+
+            connected.commit()
+            print('Data Saved.')
+        except mysql.connector.Error as err:
+            print(f'Error: {err}')
+        finally:
+            if connected.is_connected():
+                cursor.close()
+                connected.close() 
 
 SQL_Pre_Enrollees_DB = Pre_Enrollees_DB('root', 'CS2025EU', 'localhost', 'Pre_Enrollees')
 
-SQL_Pre_Enrollees_DB.testlang()
+
+def main():
+    while True:
+        print("\n=== EARLY ENROLLMENT REGISTRATION ===")
+        print("1. Add Student")
+        print("2. Option Two")
+        print("3. Option Three")
+        print("0. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            os.system('cls')
+            student_ID = input('Enter ID: ')
+            name = input('Enter name:')
+            age = input('Enter age: ')
+            shs_strand = input('Enter strand: ')
+            program = input('Enter program: ')
+
+            SQL_Pre_Enrollees_DB.add(student_ID, name, age, shs_strand, program)
+        
+
+        elif choice == '2':
+            print("You selected Option Two.")
+        elif choice == '3':
+            print("You selected Option Three.")
+        elif choice == '0':
+            print("Exiting program. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
