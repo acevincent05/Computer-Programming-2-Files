@@ -42,15 +42,16 @@ INSERT INTO transfer_students (ID, name, age, prev_program, new_program) VALUES
 ('T0009', 'Lara Umali', 21, 'BSED', 'BSHM'),
 ('T0010', 'Troy Aguilar', 23, 'BSHM', 'BSCE');
 
-
+# view the new_students table contents
 SELECT * FROM new_students;
 
+# view the transfer_students table contents
 SELECT * FROM transfer_students;
 
-# change 'Darren Cruz' name to 'Kyle Cruz'
+# change 'Darren Cruz' name from new_students table to 'Kyle Cruz'
 UPDATE new_students SET name = 'Kyle Cruz' where id = 'N0010';
 
-# delete a students based on the selected ID
+# delete a students from the transfer_students table based on the selected ID
 DELETE FROM transfer_students where ID = 'T0004';
 
 # view students with the STEM SHS strand
