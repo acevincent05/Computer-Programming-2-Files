@@ -63,8 +63,8 @@ class Pre_Enrollees_DB:
             connected = self.connect()
             cursor = connected.cursor()
 
-            query = "INSERT INTO new_students (ID, name, age, shs_strand, chosen_program) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(query, (student_ID, name, int(age), shs_strand, program))
+            add_query = "INSERT INTO new_students (ID, name, age, shs_strand, chosen_program) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(add_query, (student_ID, name, int(age), shs_strand, program))
 
             connected.commit()
             print('Data Saved.')
@@ -75,10 +75,35 @@ class Pre_Enrollees_DB:
         finally:
             if connected.is_connected():
                 cursor.close()
-                connected.close() 
+                connected.close()
+
+    def display_all_students(self):
+        try:
+            connection = self.connect()
+            cursor = connection.cursor()
+
+            query = "SELECT * FROM new_students"
+            cursor.execute(query)
+
+            # Fetch all rows at once
+            rows = cursor.fetchall()
+
+            print(f"{'ID':<10} | {'Name':<15} | {'Age':<5} | {'Strand':<10} | {'Program':<6}")
+            print("-" * 60)
+
+            # Loop through each row
+            for row in rows:
+                print(f"{row[0]:<10} | {row[1]:<15} | {row[2]:<5} | {row[3]:<10} | {row[4]:<6}") #prints each rows 
+
+        except mysql.connector.Error as err:
+            print(f"Error: {err}")
+
+        finally:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
 
 SQL_Pre_Enrollees_DB = Pre_Enrollees_DB('root', 'CS2025EU', 'localhost', 'Pre_Enrollees')
-
 
 def main():
     while True:
@@ -93,6 +118,11 @@ def main():
         if choice == '1':
             os.system('cls')
 
+            SQL_Pre_Enrollees_DB.display_all_students()
+
+        elif choice == '2':
+            os.system('cls')
+
             student_ID = input('Enter ID: ')
             name = input('Enter name:')
             age = input('Enter age: ')
@@ -101,9 +131,6 @@ def main():
 
             SQL_Pre_Enrollees_DB.add(student_ID, name, age, shs_strand, program)
         
-
-        elif choice == '2':
-            print("You selected Option Two.")
         elif choice == '3':
             print("You selected Option Three.")
         elif choice == '0':
