@@ -67,7 +67,7 @@ class Pre_Enrollees_DB:
             cursor.execute(add_query, (student_ID, name, int(age), shs_strand, program))
 
             connected.commit()
-            print('Data saved.')
+            print('Enrollee data saved.')
 
         except mysql.connector.Error as err:
             print(f'Error: {err}')
@@ -103,21 +103,21 @@ class Pre_Enrollees_DB:
                 cursor.close()
                 connection.close()
 
-    def update_student(self, student_ID, name, age, shs_strand, program):
+    def update_enrollee(self, student_ID, name, age, shs_strand, program):
         try:
             connected = self.connect()
             cursor = connected.cursor()
 
             update_query = """
             UPDATE new_students
-            SET name = %s, age = %s, shs_strand = %s, chosen_program = %s
+            SET name = %s, age = %i, shs_strand = %s, chosen_program = %s
             WHERE ID = %s
             """
 
             cursor.execute(update_query, (name, age, shs_strand, program, student_ID))
             
             connected.commit()
-            print('Data updated.')
+            print('Enrollee data updated.')
 
         except mysql.connector.Error as err:
             print(f'Error: {err}')
@@ -126,6 +126,27 @@ class Pre_Enrollees_DB:
             if connected.is_connected():
                 cursor.close()
                 connected.close()
+
+    def delete_enrollee(self, student_ID):
+        try:
+            connected = self.connect()
+            cursor = connected.cursor()
+
+            delete_query = "DELETE FROM new_students where ID = %s"
+
+            cursor.execute(delete_query, (student_ID,))
+            
+            connected.commit()
+            print('Enrollee data deleted.')
+
+        except mysql.connector.Error as err:
+            print(f'Error: {err}')
+
+        finally:
+            if connected.is_connected():
+                cursor.close()
+                connected.close()
+
 
 def get_student_info():
     student_ID = input('Enter ID: ')
@@ -163,10 +184,13 @@ def main():
             os.system('cls')
 
             student_ID, name, age, shs_strand, program = get_student_info()
-            SQL_Pre_Enrollees_DB.update_student(student_ID, name, age, shs_strand, program)
+            SQL_Pre_Enrollees_DB.update_enrollee(student_ID, name, age, shs_strand, program)
 
         elif choice == '4':
             os.system('cls')
+
+            student_ID = input('Enter ID: ')
+            SQL_Pre_Enrollees_DB.delete_enrollee(student_ID)
 
         elif choice == '0':
             print("Exiting program")
