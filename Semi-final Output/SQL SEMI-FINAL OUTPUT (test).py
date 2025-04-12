@@ -63,9 +63,9 @@ class Pre_Enrollees_DB:
         connected = self.connect()
 
         if connected:
-            print('okay nagana')
+            print('okay nagana git test')
         else:
-            print('aguy')
+            print('aguy git test')
 
 SQL_Pre_Enrollees_DB = Pre_Enrollees_DB('root', 'CS2025EU', 'localhost', 'Pre_Enrollees')
 
