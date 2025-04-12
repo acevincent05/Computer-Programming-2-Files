@@ -67,7 +67,7 @@ class Pre_Enrollees_DB:
             cursor.execute(add_query, (student_ID, name, int(age), shs_strand, program))
 
             connected.commit()
-            print('Data Saved.')
+            print('Data saved.')
 
         except mysql.connector.Error as err:
             print(f'Error: {err}')
@@ -103,7 +103,37 @@ class Pre_Enrollees_DB:
                 cursor.close()
                 connection.close()
 
-    def update_students()
+    def update_student(self, student_ID, name, age, shs_strand, program):
+        try:
+            connected = self.connect()
+            cursor = connected.cursor()
+
+            update_query = """
+            UPDATE new_students
+            SET name = %s, age = %s, shs_strand = %s, chosen_program = %s
+            WHERE ID = %s
+            """
+
+            cursor.execute(update_query, (name, age, shs_strand, program, student_ID))
+            
+            connected.commit()
+            print('Data updated.')
+
+        except mysql.connector.Error as err:
+            print(f'Error: {err}')
+
+        finally:
+            if connected.is_connected():
+                cursor.close()
+                connected.close()
+
+def get_student_info():
+    student_ID = input('Enter ID: ')
+    name = input('Enter name: ')
+    age = input('Enter age: ')
+    shs_strand = input('Enter strand: ')
+    program = input('Enter program: ')
+    return student_ID, name, age, shs_strand, program
 
 SQL_Pre_Enrollees_DB = Pre_Enrollees_DB('root', 'CS2025EU', 'localhost', 'Pre_Enrollees')
 
@@ -126,16 +156,14 @@ def main():
         elif choice == '2':
             os.system('cls')
 
-            student_ID = input('Enter ID: ')
-            name = input('Enter name:')
-            age = input('Enter age: ')
-            shs_strand = input('Enter strand: ')
-            program = input('Enter program: ')
-
+            student_ID, name, age, shs_strand, program = get_student_info()
             SQL_Pre_Enrollees_DB.add(student_ID, name, age, shs_strand, program)
         
         elif choice == '3':
             os.system('cls')
+
+            student_ID, name, age, shs_strand, program = get_student_info()
+            SQL_Pre_Enrollees_DB.update_student(student_ID, name, age, shs_strand, program)
 
         elif choice == '4':
             os.system('cls')
