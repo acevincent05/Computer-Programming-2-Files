@@ -2,7 +2,7 @@ import mysql.connector
 from mysql.connector import errorcode
 import os
 
-
+# class for Pre_Enrollees_DB CRUD with the implementation of Encapsulation 
 class Pre_Enrollees_DB:
     def __init__(self, user: str, password: str, host: str, database: str):
         self.user = user
@@ -42,6 +42,7 @@ class Pre_Enrollees_DB:
     def set_database(self, database):
         self.database = database
 
+    # connect to MySQL
     def connect(self):
         try:
             con = mysql.connector.connect(user=self.user, 
@@ -58,6 +59,7 @@ class Pre_Enrollees_DB:
             else:
                 print(err)
 
+    # adds enrollees data
     def add(self, student_ID, name, age, shs_strand, program):
         try:
             connected = self.connect()
@@ -70,13 +72,14 @@ class Pre_Enrollees_DB:
             print('Enrollee data saved.')
 
         except mysql.connector.Error as err:
-            print(f'Error: {err}')
+            print(f'Error: {err}') # displays the error from the SQL database
 
-        finally:
+        finally: # logging out of the SQL once functions are done wether it has an error or not 
             if connected.is_connected():
                 cursor.close()
                 connected.close()
 
+    # displays all the enrollee data
     def display_all_enrollees(self):
         try:
             connection = self.connect()
@@ -85,15 +88,15 @@ class Pre_Enrollees_DB:
             query = "SELECT * FROM new_students"
             cursor.execute(query)
 
-            # Fetch all rows at once
+            # retrieves all rows
             rows = cursor.fetchall()
 
-            print(f"{'ID':<10} | {'Name':<15} | {'Age':<5} | {'Strand':<10} | {'Program':<6}")
+            print(f"{'ID':<10} | {'Name':<15} | {'Age':<5} | {'Strand':<10} | {'Program':<6}") 
             print("-" * 60)
 
-            # Loop through each row
+            # print each rows
             for row in rows:
-                print(f"{row[0]:<10} | {row[1]:<15} | {row[2]:<5} | {row[3]:<10} | {row[4]:<6}") #prints each rows 
+                print(f"{row[0]:<10} | {row[1]:<15} | {row[2]:<5} | {row[3]:<10} | {row[4]:<6}")  
 
         except mysql.connector.Error as err:
             print(f"Error: {err}")
@@ -103,6 +106,7 @@ class Pre_Enrollees_DB:
                 cursor.close()
                 connection.close()
 
+    #updates the enrollee data
     def update_enrollee(self, student_ID, name, age, shs_strand, program):
         try:
             connected = self.connect()
@@ -127,6 +131,7 @@ class Pre_Enrollees_DB:
                 cursor.close()
                 connected.close()
 
+    #delete enrollee data
     def delete_enrollee(self, student_ID):
         try:
             connected = self.connect()
@@ -147,7 +152,7 @@ class Pre_Enrollees_DB:
                 cursor.close()
                 connected.close()
 
-
+# getting the values for the sql headers
 def get_student_info():
     student_ID = input('Enter ID: ')
     name = input('Enter name: ')
@@ -156,6 +161,7 @@ def get_student_info():
     program = input('Enter program: ')
     return student_ID, name, age, shs_strand, program
 
+# requiring the user to enter the credentials of the SQL database 
 def DB_credentials():
     user = input('Enter user: ')
     password = input('Enter password: ')
@@ -166,6 +172,7 @@ def DB_credentials():
     global SQL_Pre_Enrollees_DB
     SQL_Pre_Enrollees_DB = Pre_Enrollees_DB(user, password, host, db_select)
 
+# the main menu
 def main():
     while True:
         print("\n=== EARLY ENROLLMENT REGISTRATION ===")
@@ -206,6 +213,7 @@ def main():
         else:
             print("Invalid choice. Please try again.")
 
+# allows the program to run directly when opening
 if __name__ == "__main__":
     DB_credentials()
     main()
