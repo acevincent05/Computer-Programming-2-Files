@@ -2,7 +2,7 @@ import mysql.connector
 from mysql.connector import errorcode
 import os
 
-# class for Pre_Enrollees_DB CRUD with the implementation of Encapsulation 
+# class for Pre_Enrollees_DB CRUD with the implementation of Encapsulation and Composition
 class Pre_Enrollees_DB:
     def __init__(self, user: str, password: str, host: str, database: str):
         self.user = user
@@ -59,31 +59,35 @@ class Pre_Enrollees_DB:
             else:
                 print(err)
 
+    # calls the connect method and cursor 
+    def connection_cursor(self):
+        connected = self.connect()
+        cursor = connected.cursor()
+        return connected, cursor
+
     # adds enrollees data
     def add(self, student_ID, name, age, shs_strand, program):
         try:
-            connected = self.connect()
-            cursor = connected.cursor()
+            connection, cursor = self.connection_cursor() # connects the SQL while also calling in the cursor
 
             add_query = "INSERT INTO new_students (ID, name, age, shs_strand, chosen_program) VALUES (%s, %s, %s, %s, %s)"
             cursor.execute(add_query, (student_ID, name, int(age), shs_strand, program))
 
-            connected.commit()
+            connection.commit()
             print('Enrollee data saved.')
 
         except mysql.connector.Error as err:
             print(f'Error: {err}') # displays the error from the SQL database
 
-        finally: # logging out of the SQL once functions are done wether it has an error or not 
-            if connected.is_connected():
+        finally: # logs out the SQL once functions are done wether it has an error or not 
+            if connection.is_connected():
                 cursor.close()
-                connected.close()
+                connection.close()
 
     # displays all the enrollee data
     def display_all_enrollees(self):
         try:
-            connection = self.connect()
-            cursor = connection.cursor()
+            connection, cursor = self.connection_cursor()
 
             query = "SELECT * FROM new_students"
             cursor.execute(query)
@@ -109,8 +113,7 @@ class Pre_Enrollees_DB:
     #updates the enrollee data
     def update_enrollee(self, student_ID, name, age, shs_strand, program):
         try:
-            connected = self.connect()
-            cursor = connected.cursor()
+            connection, cursor = self.connection_cursor()
 
             update_query = """
             UPDATE new_students
@@ -120,37 +123,36 @@ class Pre_Enrollees_DB:
 
             cursor.execute(update_query, (name, age, shs_strand, program, student_ID))
             
-            connected.commit()
+            connection.commit()
             print('Enrollee data updated.')
 
         except mysql.connector.Error as err:
             print(f'Error: {err}')
 
         finally:
-            if connected.is_connected():
+            if connection.is_connected():
                 cursor.close()
-                connected.close()
+                connection.close()
 
     #delete enrollee data
     def delete_enrollee(self, student_ID):
         try:
-            connected = self.connect()
-            cursor = connected.cursor()
+            connection, cursor = self.connection_cursor()
 
             delete_query = "DELETE FROM new_students where ID = %s"
 
             cursor.execute(delete_query, (student_ID,))
             
-            connected.commit()
+            connection.commit()
             print('Enrollee data deleted.')
 
         except mysql.connector.Error as err:
             print(f'Error: {err}')
 
         finally:
-            if connected.is_connected():
+            if connection.is_connected():
                 cursor.close()
-                connected.close()
+                connection.close()
 
 # getting the values for the sql headers
 def get_student_info():
