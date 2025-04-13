@@ -110,7 +110,7 @@ class Pre_Enrollees_DB:
                 cursor.close()
                 connection.close()
 
-    #updates the enrollee data
+    # updates the enrollee data
     def update_enrollee(self, student_ID, name, age, shs_strand, program):
         try:
             connection, cursor = self.connection_cursor()
@@ -134,7 +134,7 @@ class Pre_Enrollees_DB:
                 cursor.close()
                 connection.close()
 
-    #delete enrollee data
+    # delete enrollee data
     def delete_enrollee(self, student_ID):
         try:
             connection, cursor = self.connection_cursor()
@@ -170,8 +170,8 @@ def DB_credentials():
     host = input('Enter host: ')
     db_select = input('Enter Database: ')
 
-    #SQL_Pre_Enrollees_DB = Pre_Enrollees_DB('root', 'CS2025EU', 'localhost', 'Pre_Enrollees')
-    global SQL_Pre_Enrollees_DB
+    # SQL_Pre_Enrollees_DB = Pre_Enrollees_DB('root', 'CS2025EU', 'localhost', 'Pre_Enrollees')
+    global SQL_Pre_Enrollees_DB # to access SQL_Pre_Enrollees_DB in the menu
     SQL_Pre_Enrollees_DB = Pre_Enrollees_DB(user, password, host, db_select)
 
 # the main menu
