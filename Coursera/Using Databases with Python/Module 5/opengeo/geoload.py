@@ -77,7 +77,7 @@ for line in fh:
 
     if count % 10 == 0 :
         print('Pausing for a bit...')
-        time.sleep(5)
+        #time.sleep(5)
 
 if nofound > 0:
     print('Number of features for which the location could not be found:', nofound)
