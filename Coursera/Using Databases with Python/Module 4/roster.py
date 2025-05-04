@@ -30,7 +30,7 @@ CREATE TABLE Member (
 
 fname = input('Enter file name: ')
 if len(fname) < 1:
-    fname = 'roster_data_sample.json'
+    fname = 'roster_data.json'
 
 #   [ "Charley", "si110", 1 ],
 #   [ "Mea", "si110", 0 ],
