@@ -1,5 +1,10 @@
 fname = input("Enter file name: ")
 fh = open(fname)
-lst = list()
-for line in fh:
-print(line.rstrip())
+
+list = []
+lines = [line.split() for line in fh]
+
+for i in lines:
+    for j in i:
+        if j not in list:
+            list.append(j)
