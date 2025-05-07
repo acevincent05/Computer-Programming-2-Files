@@ -2,7 +2,7 @@
 fname = input("Enter file name: ")
 fh = open(fname)
 
-for line in fh:
+for line in fname:
     line = line.rstrip()
 
 inp = fh.read()
