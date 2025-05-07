@@ -7,3 +7,4 @@ for line in fh:
 
 inp = fh.read()
 
+print(inp.upper())
