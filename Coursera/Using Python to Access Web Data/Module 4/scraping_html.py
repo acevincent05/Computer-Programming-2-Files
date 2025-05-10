@@ -21,3 +21,5 @@ num = []
 
 for span in spans:
     num.append(int(span.string))
+
+print(num)
