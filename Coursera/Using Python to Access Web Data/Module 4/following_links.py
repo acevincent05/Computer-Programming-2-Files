@@ -2,7 +2,7 @@
 # http://www.py4e.com/code3/bs4.zip
 # and unzip it in the same directory as this file
 
-from urllib.request import urlopen
+import urllib.request, urllib.parse, urllib.error
 from bs4 import BeautifulSoup
 import ssl
 
@@ -15,12 +15,11 @@ url = input("Enter URL: ")
 count = int(input("Enter count: "))
 position = int(input("Enter position: "))
 
-
 names = []
 
 while count > 0:
     print ("retrieving: {0}".format(url))
-    html = urlopen(url, context=ctx).read()
+    html = urllib.request.urlopen(url, context=ctx).read()
     soup = BeautifulSoup(html, "html.parser")
     anchors = soup('a')
     name = anchors[position-1].string
@@ -28,6 +27,7 @@ while count > 0:
     url = anchors[position-1]['href']
     count -= 1
 
+print()
 print(names)
 print()
 print (names[-1])
