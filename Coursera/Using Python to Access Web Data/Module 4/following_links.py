@@ -28,5 +28,6 @@ while count > 0:
     url = anchors[position-1]['href']
     count -= 1
 
-
+print(names)
+print()
 print (names[-1])
