@@ -2,7 +2,7 @@
 # http://www.py4e.com/code3/bs4.zip
 # and unzip it in the same directory as this file
 
-import urllib.request, urllib.parse, urllib.error
+from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import ssl
 
@@ -11,20 +11,22 @@ ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-url = input('Enter - ')
-html = urllib.request.urlopen(url, context=ctx).read()
-soup = BeautifulSoup(html, 'html.parser')
+url = input("Enter URL: ")
+count = int(input("Enter count: "))
+position = int(input("Enter position: "))
 
-#count = int(input('Enter count: '))
-position = int(input('Enter position: '))
 
-# Retrieve all of the anchor tags
-tags = soup('a')
+names = []
 
-tag_count = 0
+while count > 0:
+    print ("retrieving: {0}".format(url))
+    html = urlopen(url, context=ctx).read()
+    soup = BeautifulSoup(html, "html.parser")
+    anchors = soup('a')
+    name = anchors[position-1].string
+    names.append(name)
+    url = anchors[position-1]['href']
+    count -= 1
 
-for tag in tags:
-    tag_count += 1
-    if tag_count == position:
-        print(tag.get('href', None))
-        break
+
+print (names[-1])
