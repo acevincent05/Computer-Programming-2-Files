@@ -22,9 +22,9 @@ while count > 0:
     html = urllib.request.urlopen(url, context=ctx).read()
     soup = BeautifulSoup(html, "html.parser")
     anchors = soup('a')
-    name = anchors[position-2].string
+    name = anchors[position-1].string
     names.append(name)
-    url = anchors[position-2]['href']
+    url = anchors[position-1]['href']
     count -= 1
 
 print()
