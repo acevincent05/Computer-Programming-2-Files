@@ -13,7 +13,6 @@ ctx.verify_mode = ssl.CERT_NONE
 
 url = input("Enter URL: ")
 count = int(input("Enter count: "))
-count += 1
 position = int(input("Enter position: "))
 
 names = []
