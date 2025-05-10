@@ -20,4 +20,4 @@ spans = soup('span')
 num = []
 
 for span in spans:
-    
+    num.append(span.string)
