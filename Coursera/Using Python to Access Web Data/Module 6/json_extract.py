@@ -8,5 +8,8 @@ data = response.json()
 
 num_list = []
 
-for num in data:
-    num_list.append(data['comments']['count'])
+for comment in data['comments']:
+    # comment is a dict; get its 'count'
+    num_list.append(comment['count'])
+
+
