@@ -3,9 +3,9 @@ import requests
 
 url = "https://py4e-data.dr-chuck.net/comments_2198753.json"
 
-parsed_url = urlparse(url)
+response = requests.json()
 
-data = parsed_url.json()
+data = response.json()
 
 num_list = []
 
