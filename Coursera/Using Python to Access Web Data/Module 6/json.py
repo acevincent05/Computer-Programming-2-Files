@@ -1,7 +1,7 @@
 import json
+import requests
 
-data = "https://py4e-data.dr-chuck.net/comments_2198753.json"
-
+url = "https://py4e-data.dr-chuck.net/comments_2198753.json"
 
 
 info = json.loads(data)
