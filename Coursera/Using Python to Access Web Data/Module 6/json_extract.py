@@ -14,4 +14,10 @@ print(data)
 for comment in parsed_data['comments']:
     num_list.append(comment['count'])
 
-'''print(sum(num_list))'''
+
+
+print(type(parsed_data))
+
+print(num_list)
+
+print(sum(num_list))
