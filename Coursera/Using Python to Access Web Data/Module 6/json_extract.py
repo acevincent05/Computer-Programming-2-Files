@@ -3,7 +3,7 @@ import requests
 
 url = "https://py4e-data.dr-chuck.net/comments_2198753.json"
 
-response = requests.json()
+response = requests.get(url)
 data = response.json()
 
 num_list = []
