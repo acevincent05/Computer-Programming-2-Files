@@ -12,4 +12,4 @@ for comment in data['comments']:
     # comment is a dict; get its 'count'
     num_list.append(comment['count'])
 
-
+print(sum(num_list))
