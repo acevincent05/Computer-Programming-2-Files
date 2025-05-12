@@ -47,9 +47,8 @@ while True:
     location = js['features'][0]['properties']['formatted']
     print(location)
     
-    plus_code = js['features']
+    plus_code = js['features'][0]['properties']['plus_code']
 
-    print(type(plus_code))
-    print(type(location))
+    print('Plus code', plus_code)
     
 
