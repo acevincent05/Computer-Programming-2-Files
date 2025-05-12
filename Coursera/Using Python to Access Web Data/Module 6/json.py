@@ -1,16 +1,8 @@
 import json
 
-data = '''
-[
-  { "id" : "001",
-    "x" : "2",
-    "name" : "Chuck"
-  } ,
-  { "id" : "009",
-    "x" : "7",
-    "name" : "Brent"
-  }
-]'''
+data = "https://py4e-data.dr-chuck.net/comments_2198753.json"
+
+
 
 info = json.loads(data)
 print('User count:', len(info))
