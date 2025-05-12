@@ -1,10 +1,16 @@
 import json
 import requests
-from urllib.parse import urlparse, parse_qs
 
 url = "https://py4e-data.dr-chuck.net/comments_2198753.json"
 
 parsed_url = urlparse(url)
+
+data = parsed_url.json()
+
+num_list = []
+
+for num in parsed_url:
+    num_list.append('comments'['num'])
 
 info = json.loads(data)
 print('User count:', len(info))
