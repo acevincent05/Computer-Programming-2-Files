@@ -14,8 +14,6 @@ print(data)
 for comment in parsed_data['comments']:
     num_list.append(comment['count'])
 
-
-
 print(type(parsed_data))
 
 print(num_list)
