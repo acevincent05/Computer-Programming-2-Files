@@ -5,11 +5,13 @@ url = "https://py4e-data.dr-chuck.net/comments_2198753.json"
 
 response = urllib.request.urlopen(url)
 data = response.read().decode()
+parsed_data = json.loads(data)
 
 num_list = []
 
-'''for comment in data['comments']:
-    # comment is a dict; get its 'count'
-    num_list.append(comment['count'])'''
+print(data)
 
-print(sum(num_list))
+for comment in parsed_data['comments']:
+    num_list.append(comment['count'])
+
+'''print(sum(num_list))'''
