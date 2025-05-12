@@ -46,6 +46,13 @@ while True:
     print('lat', lat, 'lon', lon)
     location = js['features'][0]['properties']['formatted']
     print(location)
+    
+    features = js['features']
 
+    plus_code = features['plus_code']
 
+    js = json.loads(data)
+    print(type(plus_code))
+    print(type(location))
+    
 
