@@ -47,11 +47,8 @@ while True:
     location = js['features'][0]['properties']['formatted']
     print(location)
     
-    features = js['features'][0]
+    plus_code = js['features']
 
-    plus_code = features['plus_code']
-
-    js = json.loads(data)
     print(type(plus_code))
     print(type(location))
     
